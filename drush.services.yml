@@ -1,0 +1,10 @@
+services:
+  du_tuition_calculator.commands:
+    class: \Drupal\du_tuition_calculator\Commands\TuitionCostCommands
+    arguments:
+      - '@queue'
+      - '@config.factory'
+      - '@logger.factory'
+      - '@http_client'
+    tags:
+      - { name: drush.command }

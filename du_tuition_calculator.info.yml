@@ -1,0 +1,8 @@
+name: DU Tuition Calculator
+description: Creates tuition calculator functionality.
+package: DU
+type: module
+core_version_requirement: ^8 || ^9 || ^10
+configure: du_tuition_calculator.settings
+dependencies:
+  - drupal:chosen

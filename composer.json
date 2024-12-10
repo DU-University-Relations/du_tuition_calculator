@@ -1,0 +1,17 @@
+{
+  "name": "drupal/du_tuition_calculator",
+  "description": "Import Tuition Cost entities.",
+  "type": "drupal-module",
+  "autoload": {
+    "psr-4": {
+      "Drupal\\du_tuition_calculator\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^9"
+      }
+    }
+  }
+}

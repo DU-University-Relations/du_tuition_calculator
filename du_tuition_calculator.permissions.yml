@@ -1,0 +1,8 @@
+administer DU tuition calculator:
+  title: 'Administer Tuition Calculator'
+  description: 'Configure settings for the DU Tuition Calculator.'
+  restrict access: TRUE
+administer DU tuition calculator content:
+  title: 'Administer Tuition Calculator Content'
+  description: 'Configure content and defaults for the DU Tuition Calculator.'
+  restrict access: TRUE

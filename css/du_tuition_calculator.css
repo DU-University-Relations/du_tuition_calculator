@@ -1,0 +1,35 @@
+/**
+ * @file
+ *   CSS for the Cludo Search module.
+ */
+
+.dutc-college,
+.dutc-year,
+.dutc-semester,
+.dutc-credits,
+.dutc-academic-year,
+.dutc-year,
+.dutc-cost,
+.dutc-no-cost,
+.dutc-search-option,
+.dutc-degree,
+.dutc-ayear-disclaimer {
+  display: none;
+}
+
+#edit-college option:first-child,
+#edit-degree option:first-child,
+#edit-start-year option:first-child,
+#edit-semester option:first-child,
+#edit-credits option:first-child,
+#edit-currently-enrolled option:first-child {
+  display: none;
+}
+
+#edit-search-option--wrapper {
+  margin-top: 0 !important;
+}
+
+#edit-search-option input {
+  margin-bottom: 3rem;
+}

@@ -1,0 +1,10 @@
+du-tuition-calculator:
+  version: 1.x
+  css:
+    theme:
+      css/du_tuition_calculator.css: {}
+  js:
+    js/du_tuition_calculator.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

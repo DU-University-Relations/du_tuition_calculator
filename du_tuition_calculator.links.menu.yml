@@ -1,0 +1,6 @@
+du_tuition_calculator.settings:
+  title: 'Tuition Calculator Settings'
+  description: 'Configure options for DU tuition Calculator.'
+  parent: system.admin_config_content
+  route_name: du_tuition_calculator.settings
+  weight: -20

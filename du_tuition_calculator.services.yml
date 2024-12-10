@@ -1,0 +1,5 @@
+services:
+  du_tuition_calculator:
+    class: \Drupal\du_tuition_calculator\TuitionCalculatorQuery
+    arguments:
+      - '@database'

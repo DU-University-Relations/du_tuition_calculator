@@ -1,0 +1,13 @@
+du_tuition_calculator.settings:
+  path: '/admin/config/content/tuition-calculator'
+  defaults:
+    _form: '\Drupal\du_tuition_calculator\Form\SettingsForm'
+  requirements:
+    _permission: 'administer DU tuition calculator content'
+du_tuition_calculator.calculator:
+  path: '/admission-aid/tuition-calculator'
+  defaults:
+    _form: '\Drupal\du_tuition_calculator\Form\Calculator'
+    _title: 'Tuition Calculator'
+  requirements:
+    _permission: 'access content'
