@@ -1,5 +1,5 @@
 {
-  "name": "drupal/du_tuition_calculator",
+  "name": "university-of-denver/du_tuition_calculator",
   "description": "Import Tuition Cost entities.",
   "type": "drupal-module",
   "autoload": {
