@@ -19,7 +19,7 @@
           perCredit = 0,
           aYear = dutcSettings.currentAcademicYear;
 
-        if ($('#edit-academic-year').chosen().val() == 'next') {
+        if ($('#edit-academic-year').val() == 'next') {
           aYear = dutcSettings.nextAcademicYear;
         }
 
@@ -44,7 +44,7 @@
           $('.dutc-disclaimer-credit').hide();
         }
         else {
-          credits = parseFloat($('#edit-credits').chosen().val());
+          credits = parseFloat($('#edit-credits').val());
           cost = selectedProgramData.details.per_credit * credits;
           perCredit = selectedProgramData.details.per_credit;
           $('.dutc-per-credit-term').html('Credit');
@@ -174,7 +174,7 @@
       }
 
       $('#edit-currently-enrolled').change(function() {
-        var current = $(this).chosen().val();
+        var current = $(this).val();
         if (current == 'current') {
           currentStudent = true;
           enrolledToggle();
@@ -226,7 +226,7 @@
       });
 
       $('#edit-college').change(function() {
-        var collegeCode = $(this).chosen().val();
+        var collegeCode = $(this).val();
         $('#edit-degree').val(null).trigger('chosen:updated');
         $('#edit-start-year').val(null).trigger('chosen:updated');
         $('#edit-semester').val(null).trigger('chosen:updated');
@@ -263,7 +263,7 @@
       });
 
       $('#edit-degree').change(function() {
-        var selectValue = $(this).chosen().val();
+        var selectValue = $(this).val();
         $('#edit-start-year').val(null).trigger('chosen:updated');
         $('#edit-semester').val(null).trigger('chosen:updated');
         $('#edit-credits').val(null).trigger('chosen:updated');
@@ -289,7 +289,7 @@
       });
 
       $('#edit-semester').change(function() {
-        var selectValue = $(this).chosen().val();
+        var selectValue = $(this).val();
         $('#edit-start-year').val(null).trigger('chosen:updated');
         $('#edit-credits').val(null).trigger('chosen:updated');
         $('#edit-academic-year').val(null).trigger('chosen:updated');
@@ -314,7 +314,7 @@
       });
 
       $('#edit-start-year').change(function() {
-        var selectValue = $(this).chosen().val();
+        var selectValue = $(this).val();
         $('#edit-credits').val(null).trigger('chosen:updated');
         $('#edit-academic-year').val(null).trigger('chosen:updated');
         $('.dutc-ayear-disclaimer').hide();
@@ -334,13 +334,13 @@
       });
 
       $('#edit-academic-year').change(function() {
-        var selectValue = $(this).chosen().val(),
+        var selectValue = $(this).val(),
           startYear = null;
         $('#edit-credits').val(null).trigger('chosen:updated');
         $('.dutc-ayear-disclaimer').hide();
 
         if (selectValue.length > 0) {
-          var semester = $('#edit-semester').chosen().val(),
+          var semester = $('#edit-semester').val(),
             semesterNum = 50,
             aYear = dutcSettings.currentAcademicYear;
           if (semester == 'winter') {
@@ -355,11 +355,11 @@
           if (selectValue == 'next') {
             aYear = dutcSettings.nextAcademicYear;
           }
-          if (currentStudent && $('#edit-start-year').chosen().val().length > 0) {
-            startYear = parseFloat($('#edit-start-year').chosen().val());
+          if (currentStudent && $('#edit-start-year').val().length > 0) {
+            startYear = parseFloat($('#edit-start-year').val());
           }
           selectedProgramData = findProgramData(
-            $('#edit-degree').chosen().val(),
+            $('#edit-degree').val(),
             aYear,
             semesterNum,
             startYear
@@ -397,7 +397,7 @@
       });
 
       $('#edit-credits').change(function() {
-        var selectValue = $(this).chosen().val();
+        var selectValue = $(this).val();
         $('.dutc-ayear-disclaimer').hide();
         if (selectValue.length > 0) {
           calculateTuitionCost();
