@@ -199,13 +199,14 @@ class SettingsForm extends ConfigFormBase {
 
     $admin_access = $this->currentUser->hasPermission('administer DU tuition calculator');
 
-    if ($admin_access) {
-      $config->set('api_url', trim($values['api_url']));
-      $config->set('client_id', trim($values['client_id']));
-      $config->set('client_secret', trim($values['client_secret']));
-      $config->set('flat_rate_pricing', trim($values['flat_rate_pricing']));
-      $config->set('current_academic_year', $values['current_academic_year']);
-    }
+  if ($admin_access) {
+    $config->set('api_url', trim($values['api_url'] ?? ''));
+    $config->set('client_id', trim($values['client_id'] ?? ''));
+    $config->set('client_secret', trim($values['client_secret'] ?? ''));
+    $config->set('flat_rate_pricing', trim($values['flat_rate_pricing'] ?? ''));
+    $config->set('current_academic_year', $values['current_academic_year'] ?? '');
+  }
+
 
     $config->set('per_credit_hour_text', $values['per_credit_hour_text']);
     $config->set('annual_cost_of_tuition_text', $values['annual_cost_of_tuition_text']);
