@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: du_tuition_calculator
+label: Tuition Calculator
+icon_uuid: null
+behavior_plugins: {  }
