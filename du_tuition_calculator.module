@@ -2,12 +2,24 @@
 
 use Drupal\Core\Entity\EntityInterface;
 
+/**
+ * Implements hook_theme().
+ */
+function du_tuition_calculator_theme($existing, $type, $theme, $path) {
+  return [
+    'paragraph__du_tuition_calculator' => [
+      'base hook'      => 'paragraph',
+      'template'       => 'paragraph--du-tuition-calculator',
+      'path'           => $path . '/templates',
+      'render element' => 'elements',
+    ],
+  ];
+}
+
 function du_tuition_calculator_entity_view(array &$build, EntityInterface $entity, $view_mode, $langcode) {
   if ($entity->getEntityTypeId() === 'paragraph' && $entity->bundle() === 'du_tuition_calculator') {
-    // Build the calculator form.
-    $build['calculator'] = \Drupal::formBuilder()
+    $build['content']['calculator'] = \Drupal::formBuilder()
       ->getForm(\Drupal\du_tuition_calculator\Form\Calculator::class);
-
     $build['#attributes']['class'][] = 'paragraph--type--du-tuition-calculator';
   }
 }
