@@ -158,16 +158,10 @@ class SettingsForm extends ConfigFormBase {
     $config->set('api_url', trim($values['api_url'] ?? ''));
     $config->set('client_id', trim($values['client_id'] ?? ''));
     $config->set('client_secret', trim($values['client_secret'] ?? ''));
-    // $config->set('flat_rate_pricing', trim($values['flat_rate_pricing'] ?? ''));
     $config->set('current_academic_year', $values['current_academic_year'] ?? '');
   }
 
-
-    $config->set('per_credit_hour_text', $values['per_credit_hour_text']);
     $config->set('annual_cost_of_tuition_text', $values['annual_cost_of_tuition_text']);
-    $config->set('annual_cost_of_tuition_term_text', $values['annual_cost_of_tuition_term_text']);
-    $config->set('calculator_header', $values['calculator_header']);
-    $config->set('calculator_footer', $values['calculator_footer']);
     $config->set('no_cost_results', $values['no_cost_results']);
     $config->save();
 
