@@ -101,18 +101,18 @@ class SettingsForm extends ConfigFormBase {
       '#disabled' => $admin_restrict,
     ];
 
-    $form['admin']['flat_rate_pricing'] = [
-      '#type' => 'entity_autocomplete',
-      '#target_type' => 'node',
-      '#title' => $this->t('Flat Rate Page Location'),
-      '#description' => $this->t('The page used when flat rate pricing is displayed.'),
-    ];
-    if (!empty($config->get('flat_rate_pricing'))) {
-      $value = Node::load((int) $config->get('flat_rate_pricing'));
-      if (!empty($value)) {
-        $form['admin']['flat_rate_pricing']['#default_value'] = $value;
-      }
-    }
+    // $form['admin']['flat_rate_pricing'] = [
+    //   '#type' => 'entity_autocomplete',
+    //   '#target_type' => 'node',
+    //   '#title' => $this->t('Flat Rate Page Location'),
+    //   '#description' => $this->t('The page used when flat rate pricing is displayed.'),
+    // ];
+    // if (!empty($config->get('flat_rate_pricing'))) {
+    //   $value = Node::load((int) $config->get('flat_rate_pricing'));
+    //   if (!empty($value)) {
+    //     $form['admin']['flat_rate_pricing']['#default_value'] = $value;
+    //   }
+    // }
 
     $current_year = date('Y');
     $academic_year_options = [
@@ -137,14 +137,14 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('Content Settings'),
     ];
 
-    $form['content']['per_credit_hour_text'] = [
-      '#type' => 'textarea',
-      '#rows' => 5,
-      '#title' => $this->t('Per-credit Hour Tuition Helper Text'),
-      '#description' => $this->t('Optional text to explain this data. Use %academic_year to represent the academic year selected.'),
-      '#default_value' => $config->get('per_credit_hour_text'),
-      '#size' => 60,
-    ];
+    // $form['content']['per_credit_hour_text'] = [
+    //   '#type' => 'textarea',
+    //   '#rows' => 5,
+    //   '#title' => $this->t('Per-credit Hour Tuition Helper Text'),
+    //   '#description' => $this->t('Optional text to explain this data. Use %academic_year to represent the academic year selected.'),
+    //   '#default_value' => $config->get('per_credit_hour_text'),
+    //   '#size' => 60,
+    // ];
     $form['content']['annual_cost_of_tuition_text'] = [
       '#type' => 'textarea',
       '#rows' => 5,
@@ -153,14 +153,14 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('annual_cost_of_tuition_text'),
       '#size' => 60,
     ];
-    $form['content']['annual_cost_of_tuition_term_text'] = [
-      '#type' => 'textarea',
-      '#rows' => 5,
-      '#title' => $this->t('Annual Cost of Tuition Helper Term Text'),
-      '#description' => $this->t('Optional text to explain this data when term pricing is used. Use %academic_year to represent the academic year selected and %credits to represent credits selected.'),
-      '#default_value' => $config->get('annual_cost_of_tuition_term_text'),
-      '#size' => 60,
-    ];
+    // $form['content']['annual_cost_of_tuition_term_text'] = [
+    //   '#type' => 'textarea',
+    //   '#rows' => 5,
+    //   '#title' => $this->t('Annual Cost of Tuition Helper Term Text'),
+    //   '#description' => $this->t('Optional text to explain this data when term pricing is used. Use %academic_year to represent the academic year selected and %credits to represent credits selected.'),
+    //   '#default_value' => $config->get('annual_cost_of_tuition_term_text'),
+    //   '#size' => 60,
+    // ];
     $form['content']['no_cost_results'] = [
       '#type' => 'textarea',
       '#rows' => 5,
@@ -170,22 +170,22 @@ class SettingsForm extends ConfigFormBase {
       '#size' => 60,
     ];
 
-    $form['content']['calculator_header'] = [
-      '#type' => 'textarea',
-      '#rows' => 5,
-      '#title' => $this->t('Form Header Text'),
-      '#description' => $this->t('Optional text placed before the form. Use %current_academic_year to represent the current academic year.'),
-      '#default_value' => $config->get('calculator_header'),
-      '#size' => 60,
-    ];
-    $form['content']['calculator_footer'] = [
-      '#type' => 'textarea',
-      '#rows' => 5,
-      '#title' => $this->t('Form Footer Text'),
-      '#description' => $this->t('Optional text placed after the form. Use %current_academic_year to represent the current academic year.'),
-      '#default_value' => $config->get('calculator_footer'),
-      '#size' => 60,
-    ];
+    // $form['content']['calculator_header'] = [
+    //   '#type' => 'textarea',
+    //   '#rows' => 5,
+    //   '#title' => $this->t('Form Header Text'),
+    //   '#description' => $this->t('Optional text placed before the form. Use %current_academic_year to represent the current academic year.'),
+    //   '#default_value' => $config->get('calculator_header'),
+    //   '#size' => 60,
+    // ];
+    // $form['content']['calculator_footer'] = [
+    //   '#type' => 'textarea',
+    //   '#rows' => 5,
+    //   '#title' => $this->t('Form Footer Text'),
+    //   '#description' => $this->t('Optional text placed after the form. Use %current_academic_year to represent the current academic year.'),
+    //   '#default_value' => $config->get('calculator_footer'),
+    //   '#size' => 60,
+    // ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -203,7 +203,7 @@ class SettingsForm extends ConfigFormBase {
     $config->set('api_url', trim($values['api_url'] ?? ''));
     $config->set('client_id', trim($values['client_id'] ?? ''));
     $config->set('client_secret', trim($values['client_secret'] ?? ''));
-    $config->set('flat_rate_pricing', trim($values['flat_rate_pricing'] ?? ''));
+    // $config->set('flat_rate_pricing', trim($values['flat_rate_pricing'] ?? ''));
     $config->set('current_academic_year', $values['current_academic_year'] ?? '');
   }
 
