@@ -23,3 +23,10 @@ function du_tuition_calculator_entity_view(array &$build, EntityInterface $entit
     $build['#attributes']['class'][] = 'paragraph--type--du-tuition-calculator';
   }
 }
+
+function du_tuition_calculator_uninstall() {
+  \Drupal::service('config.factory')->getEditable('field.storage.node.field_tuition_calculator')->delete();
+  \Drupal::service('config.factory')->getEditable('field.field.node.page.field_tuition_calculator')->delete();
+  \Drupal::service('config.factory')->getEditable('paragraphs.paragraphs_type.du_tuition_calculator')->delete();
+  \Drupal::service('config.factory')->getEditable('user.role.du_tuition_queue_runner')->delete();
+}
