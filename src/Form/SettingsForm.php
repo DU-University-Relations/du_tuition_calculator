@@ -6,8 +6,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxy;
-use Drupal\node\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\du_tuition_calculator\Service\CliQueueInvoker;
 
 /**
  * Class SettingsForm.
@@ -17,59 +17,52 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class SettingsForm extends ConfigFormBase {
 
   /**
-   * The config factory interface.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * Drupal\Core\Session\AccountProxy definition.
+   * The current user.
    *
    * @var \Drupal\Core\Session\AccountProxy
    */
   protected $currentUser;
 
   /**
-   * Constructs a \Drupal\du_tuition_calculator\Form\SettingsForm object.
+   * CLI queue invoker service.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The factory for configuration objects.
-   * @param \Drupal\Core\Session\AccountProxy $current_user
-   *   The current user object.
+   * @var \Drupal\du_tuition_calculator\Service\CliQueueInvoker
    */
-  public function __construct(ConfigFactoryInterface $config_factory, AccountProxy $current_user) {
-    parent::__construct($config_factory);
-    $this->currentUser = $current_user;
-  }
+  protected $cliRunner;
 
   /**
-   * {@inheritdoc}
+   * Constructs a SettingsForm object.
    */
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    AccountProxy $current_user,
+    CliQueueInvoker $cli_runner
+  ) {
+    parent::__construct($config_factory);
+    $this->currentUser = $current_user;
+    $this->cliRunner = $cli_runner;
+  }
+
+
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('du_tuition_calculator.cli_queue_invoker')
     );
   }
 
-  /**
-   * {@inheritdoc}
-   */
+
   protected function getEditableConfigNames() {
     return ['du_tuition_calculator.settings'];
   }
 
-  /**
-   * {@inheritdoc}
-   */
+
   public function getFormId() {
     return 'du_tuition_calculator_config_settings';
   }
 
-  /**
-   * {@inheritdoc}
-   */
+
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->configFactory->get('du_tuition_calculator.settings');
 
@@ -80,7 +73,6 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('Admin Settings'),
     ];
 
-    // Connection information.
     $form['admin']['api_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Location'),
@@ -130,7 +122,6 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('Annual Cost of Tuition Helper Text'),
       '#description' => $this->t('Optional text to explain this data. Use %academic_year to represent the academic year selected and %credits to represent credits selected.'),
       '#default_value' => $config->get('annual_cost_of_tuition_text'),
-      '#size' => 60,
     ];
 
     $form['content']['no_cost_results'] = [
@@ -139,27 +130,60 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('No Cost Results'),
       '#description' => $this->t('Text displayed if the selections end in incomplete data or no cost results. Use %academic_year to represent the academic year selected.'),
       '#default_value' => $config->get('no_cost_results'),
-      '#size' => 60,
+    ];
+
+    // === Queue runner (local / dev / test / live) ===
+    $can_run_remote = $this->currentUser->hasPermission('run du tuition calculator queues');
+
+    $form['queue_cli'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Queue runner (local / dev / test / live)'),
+      '#open' => TRUE,
+      '#access' => $can_run_remote,
+    ];
+
+    $current_env = 'local';
+    if ($env = getenv('PANTHEON_ENVIRONMENT')) {
+      if (in_array($env, ['dev', 'test', 'live'], TRUE)) {
+        $current_env = $env;
+      }
+    }
+
+    $form['queue_cli']['current_env'] = [
+      '#markup' => $this->t('<p><strong>Current environment:</strong> @env</p>', [
+        '@env' => ucfirst($current_env),
+      ]),
+    ];
+
+    $form['queue_cli']['actions'] = ['#type' => 'actions'];
+    $form['queue_cli']['actions']['run_cli'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Run All (du-tcq + both queues)'),
+      '#submit' => ['::submitRunCli'],
+      '#button_type' => 'primary',
     ];
 
     return parent::buildForm($form, $form_state);
   }
 
-  /**
-   * {@inheritdoc}
-   */
+
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+  }
+
+
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->configFactory->getEditable('du_tuition_calculator.settings');
     $values = $form_state->getValues();
 
     $admin_access = $this->currentUser->hasPermission('administer DU tuition calculator');
 
-  if ($admin_access) {
-    $config->set('api_url', trim($values['api_url'] ?? ''));
-    $config->set('client_id', trim($values['client_id'] ?? ''));
-    $config->set('client_secret', trim($values['client_secret'] ?? ''));
-    $config->set('current_academic_year', $values['current_academic_year'] ?? '');
-  }
+    if ($admin_access) {
+      $config->set('api_url', trim($values['api_url'] ?? ''));
+      $config->set('client_id', trim($values['client_id'] ?? ''));
+      $config->set('client_secret', trim($values['client_secret'] ?? ''));
+      $config->set('current_academic_year', $values['current_academic_year'] ?? '');
+    }
 
     $config->set('annual_cost_of_tuition_text', $values['annual_cost_of_tuition_text']);
     $config->set('no_cost_results', $values['no_cost_results']);
@@ -168,4 +192,35 @@ class SettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
   }
 
+
+  public function submitRunCli(array &$form, FormStateInterface $form_state) {
+    if (!$this->currentUser->hasPermission('run du tuition calculator queues')) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+    $target = 'local';
+    if ($env = getenv('PANTHEON_ENVIRONMENT')) {
+      if (in_array($env, ['dev', 'test', 'live'], TRUE)) {
+        $target = $env; 
+      }
+    }
+
+    $result = $this->cliRunner->run($target, null);
+
+    if ($result['ok']) {
+      $this->messenger()->addStatus($this->t('All commands ran successfully on @target.', ['@target' => $target]));
+      if (!empty($result['stdout'])) {
+        $this->messenger()->addMessage('<pre>' . htmlspecialchars($result['stdout']) . '</pre>', 'status');
+      }
+    }
+    else {
+      $this->messenger()->addError($this->t('Run failed on @target (exit code @code).', [
+        '@target' => $target,
+        '@code' => (string) $result['exit_code'],
+      ]));
+      if (!empty($result['stderr'])) {
+        $this->messenger()->addMessage('<pre>' . htmlspecialchars($result['stderr']) . '</pre>', 'error');
+      }
+    }
+  }
 }
