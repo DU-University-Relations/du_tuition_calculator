@@ -1,8 +1,19 @@
-administer DU tuition calculator:
-  title: 'Administer Tuition Calculator'
-  description: 'Configure settings for the DU Tuition Calculator.'
+access du tuition calculator settings:
+  title: 'Access DU Tuition Calculator settings'
+  description: 'Allows users to open the DU Tuition Calculator settings page.'
   restrict access: TRUE
+
+run du tuition calculator queues:
+  title: 'Run DU Tuition Calculator queues'
+  description: 'Allows users to run the year and cost queues from the settings UI.'
+  restrict access: TRUE
+
 administer DU tuition calculator content:
-  title: 'Administer Tuition Calculator Content'
-  description: 'Configure content and defaults for the DU Tuition Calculator.'
+  title: 'Administer DU Tuition Calculator content'
+  description: 'Configure content defaults for the DU Tuition Calculator.'
+  restrict access: TRUE
+
+administer DU tuition calculator:
+  title: 'Administer DU Tuition Calculator'
+  description: 'Configure full settings for the DU Tuition Calculator, including API credentials.'
   restrict access: TRUE

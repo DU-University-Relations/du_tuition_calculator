@@ -4,3 +4,18 @@ du_tuition_calculator.settings:
   parent: system.admin_config_content
   route_name: du_tuition_calculator.settings
   weight: -20
+
+du_tuition_calculator.queue_admin:
+  title: 'Tuition Calculator Queues'
+  description: 'Run the Tuition Calculator queues (year / cost).'
+  route_name: du_tuition_calculator.queue_admin
+  parent: system.admin_config_development
+  weight: 50
+  menu_name: admin
+
+du_tuition_calculator.settings_tools:
+  title: 'Tuition Calculator Settings'
+  description: 'Configure Tuition Calculator and run queues.'
+  route_name: du_tuition_calculator.settings
+  menu_name: tools
+  weight: 0

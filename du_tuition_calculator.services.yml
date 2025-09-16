@@ -1,5 +1,10 @@
 services:
   du_tuition_calculator:
-    class: \Drupal\du_tuition_calculator\TuitionCalculatorQuery
+    class: 'Drupal\du_tuition_calculator\TuitionCalculatorQuery'
     arguments:
       - '@database'
+
+  du_tuition_calculator.cli_queue_invoker:
+    class: 'Drupal\du_tuition_calculator\Service\CliQueueInvoker'
+    arguments:
+      - '@logger.factory'
