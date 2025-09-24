@@ -114,7 +114,10 @@ class TuitionCostCommands extends DrushCommands {
     // Config variables.
     $url = $config->get('api_url');
     $client_id = $config->get('client_id');
-    $client_secret = $config->get('client_secret');
+    $client_secret = \Drupal::service('key.repository')->getKey('tuition_calculator_key')->getKeyValue();
+    if (empty($client_secret)) {
+      $logger->error('Missing client secret from Key. Check key name/sync.');
+    }
 
     // Check for API URL before proceeding.
     if (empty($url)) {
