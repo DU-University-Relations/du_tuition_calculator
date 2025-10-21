@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tuition_calculator
+    - node.type.page
+    - paragraphs.paragraphs_type.du_tuition_calculator
+  module:
+    - entity_reference_revisions
+id: node.page.field_tuition_calculator
+field_name: field_tuition_calculator
+entity_type: node
+bundle: page
+label: Tuition Calculator
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      du_tuition_calculator: du_tuition_calculator
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference_revisions

@@ -2,8 +2,10 @@ du_tuition_calculator.settings:
   path: '/admin/config/content/tuition-calculator'
   defaults:
     _form: '\Drupal\du_tuition_calculator\Form\SettingsForm'
+    _title: 'Tuition Calculator Settings'
   requirements:
-    _permission: 'administer DU tuition calculator content'
+    _permission: 'access du tuition calculator settings'
+
 du_tuition_calculator.calculator:
   path: '/admission-aid/tuition-calculator'
   defaults:
@@ -11,3 +13,11 @@ du_tuition_calculator.calculator:
     _title: 'Tuition Calculator'
   requirements:
     _permission: 'access content'
+
+du_tuition_calculator.queue_admin:
+  path: '/admin/config/development/tuition-calculator/queues'
+  defaults:
+    _form: '\Drupal\du_tuition_calculator\Form\TuitionQueueAdminForm'
+    _title: 'Tuition Calculator Queues'
+  requirements:
+    _permission: 'access du tuition queue ui'

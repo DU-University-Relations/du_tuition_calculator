@@ -1,0 +1,86 @@
+<?php
+
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
+function du_tuition_calculator_update_9001() {
+  if (!\Drupal::moduleHandler()->moduleExists('paragraphs')) {
+    \Drupal::logger('du_tuition_calculator')->warning('Paragraphs module is not enabled. Skipping field setup.');
+    return;
+  }
+
+  $storage = FieldStorageConfig::loadByName('node', 'field_tuition_calculator');
+  if (!$storage) {
+    $storage = FieldStorageConfig::create([
+      'field_name' => 'field_tuition_calculator',
+      'entity_type' => 'node',
+      'type' => 'entity_reference_revisions',
+      'settings' => ['target_type' => 'paragraph'],
+      'translatable' => TRUE,
+      'cardinality' => -1,
+    ]);
+    $storage->save();
+  }
+
+  $field = FieldConfig::loadByName('node', 'page', 'field_tuition_calculator');
+  if (!$field) {
+    $field = FieldConfig::create([
+      'field_name' => 'field_tuition_calculator',
+      'entity_type' => 'node',
+      'bundle' => 'page',
+      'label' => 'Tuition Calculator',
+      'settings' => [
+        'handler' => 'default:paragraph',
+        'handler_settings' => [
+          'target_bundles' => [
+            'du_tuition_calculator' => 'du_tuition_calculator',
+          ],
+        ],
+      ],
+      'translatable' => TRUE,
+    ]);
+    $field->save();
+  }
+
+  $form_display = EntityFormDisplay::load('node.page.default');
+  if (!$form_display) {
+    $form_display = EntityFormDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'page',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+  $form_display->setComponent('field_tuition_calculator', [
+    'type' => 'entity_reference_revisions_paragraphs',
+    'weight' => 50,
+    'settings' => [
+      'title' => 'Paragraph',
+      'edit_mode' => 'open',
+      'add_mode' => 'dropdown',
+      'form_display_mode' => 'default',
+      'default_paragraph_type' => 'du_tuition_calculator',
+    ],
+  ])->save();
+
+  $view_display = EntityViewDisplay::load('node.page.default');
+  if (!$view_display) {
+    $view_display = EntityViewDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'page',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+  $view_display->setComponent('field_tuition_calculator', [
+    'type' => 'entity_reference_revisions_entity_view',
+    'label' => 'hidden',
+    'weight' => 50,
+    'settings' => [
+      'view_mode' => 'default',
+      'link' => FALSE,
+    ],
+  ])->save();
+}
