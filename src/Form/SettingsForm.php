@@ -86,11 +86,11 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('client_id'),
       '#disabled' => $admin_restrict,
     ];
-    $form['admin']['client_secret'] = [
-      '#type' => 'textfield',
+    $form['admin']['client_secret_info'] = [
+      '#type' => 'item',
       '#title' => $this->t('Client Secret'),
-      '#default_value' => $config->get('client_secret'),
-      '#disabled' => $admin_restrict,
+      '#markup' => $this->t('Using Key: <code>tuition-calculator-key</code> (from environment via Key module).'),
+      '#description' => $this->t('This value is not editable here. Update the Pantheon secret named <code>tuition-calculator-key</code> to change it.'),
     ];
 
     $current_year = date('Y');

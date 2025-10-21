@@ -111,7 +111,10 @@ class TuitionCalculatorYearQueue extends QueueWorkerBase implements ContainerFac
     // Config variables.
     $url = $config->get('api_url');
     $client_id = $config->get('client_id');
-    $client_secret = $config->get('client_secret');
+    $client_secret = pantheon_get_secret('tuition-calculator-key');
+    if (empty($client_secret)) {
+      \Drupal::logger('du_tuition_calculator')->error('Missing Pantheon secret: tuition-calculator-key.');
+    }
 
     // Check for API URL before proceeding.
     if (empty($url)) {
