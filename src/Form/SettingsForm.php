@@ -166,24 +166,6 @@ class SettingsForm extends ConfigFormBase {
       '#button_type' => 'primary',
     ];
 
-    //! $form['queue_cli']['actions']['export_csv_link'] = [
-    //   '#type' => 'link',
-    //   '#title' => $this->t('Export CSV'),
-    //   '#url' => Url::fromUri('internal:/admin/config/development/tuition-calculator/export.csv', [
-    //   ], [
-    //     'query' => [
-    //       'year' => $config->get('current_academic_year'),
-    //     ],
-    //   ]),
-    //   '#attributes' => [
-    //     'class' => ['button', 'button--primary'],
-    //     'target' => '_blank',
-    //     'rel' => 'noopener',
-    //   ],
-    //   '#access' => $this->currentUser->hasPermission('export tuition calculator data'),
-    //   '#weight' => 60,
-    // ];
-
     $year = $config->get('current_academic_year');
 
     $form['queue_cli']['actions']['export_csv'] = [
