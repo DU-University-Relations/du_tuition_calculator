@@ -1,0 +1,36 @@
+du_tuition_calculator.settings:
+  type: config_object
+  label: 'DU Tuition Calculator settings'
+  mapping:
+    api_url:
+      type: string
+      label: 'API base URL'
+    client_id:
+      type: string
+      label: 'API client ID'
+    client_secret:
+      type: string
+      label: 'API client secret (or Key name)'
+    per_credit_hour_text:
+      type: text
+      label: 'Per-credit hour helper text'
+      translatable: true
+    annual_cost_of_tuition_text:
+      type: text
+      label: 'Annual cost of tuition text'
+      translatable: true
+    calculator_header:
+      type: text
+      label: 'Calculator header HTML/text'
+      translatable: true
+    calculator_footer:
+      type: text
+      label: 'Calculator footer HTML/text'
+      translatable: true
+    current_academic_year:
+      type: string
+      label: 'Current academic year (e.g., 2019-2020)'
+    no_cost_results:
+      type: text
+      label: 'No-cost-results message'
+      translatable: true

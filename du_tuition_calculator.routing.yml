@@ -21,3 +21,11 @@ du_tuition_calculator.queue_admin:
     _title: 'Tuition Calculator Queues'
   requirements:
     _permission: 'access du tuition queue ui'
+
+du_tuition_calculator.export:
+  path: '/admin/config/development/tuition-calculator/export.csv'
+  defaults:
+    _controller: '\Drupal\du_tuition_calculator\Controller\ExportController::export'
+    _title: 'Export Tuition Data (CSV)'
+  requirements:
+    _permission: 'access du tuition calculator settings'
