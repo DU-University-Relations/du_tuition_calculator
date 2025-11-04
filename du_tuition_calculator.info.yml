@@ -2,7 +2,7 @@ name: DU Tuition Calculator
 description: Creates tuition calculator functionality.
 package: DU
 type: module
-version: 10.24.3
+version: 10.25.0
 core_version_requirement: ^8 || ^9 || ^10
 configure: du_tuition_calculator.settings
 dependencies:
