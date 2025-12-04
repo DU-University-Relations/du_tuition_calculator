@@ -5,5 +5,4 @@ per_credit_hour_text: ''
 annual_cost_of_tuition_text: 'This is the estimated tuition for the %academic_year academic year, and is based on tracking the selected number of credits each term. Your actual tuition charges will depend on the number of classes you take.'
 calculator_header: ''
 calculator_footer: ''
-current_academic_year: 2019-2020
 no_cost_results: 'We could not calculate a cost for the %academic_year academic year with your current selections. Please try again or contact us if the issues continues to happen.'
