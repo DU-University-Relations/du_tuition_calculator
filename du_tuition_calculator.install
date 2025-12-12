@@ -5,7 +5,7 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
 /**
- * Updates related to new packed version of Tuition Calculator
+ * Updates related to new packaged version of Tuition Calculator
  */
 function du_tuition_calculator_update_9001() {
   if (!\Drupal::moduleHandler()->moduleExists('paragraphs')) {
