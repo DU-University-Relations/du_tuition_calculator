@@ -3,7 +3,6 @@
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Updates related to new packed version of Tuition Calculator
@@ -17,8 +16,8 @@ function du_tuition_calculator_update_9001() {
   // If the Paragraph Type already exists, assume it is enabled in the Basic Page content type.
   $entity_type_manager = \Drupal::service('entity_type.manager');
 
-  if ($entity_type_manager->getStorage('paragraph')->load('tuition_calculator') !== NULL) {
-    \Drupal::logger('du_tuition_calculator')->warning('Tuition Calculator paragraph type already exists. Skipping update.');
+  if ($entity_type_manager->getStorage('paragraphs_type')->load('du_tuition_calculator') !== NULL) {
+    \Drupal::logger('du_tuition_calculator')->warning('Tuition Paragraph type already exists. Skipping field setup.');
     return;
   }
 }
