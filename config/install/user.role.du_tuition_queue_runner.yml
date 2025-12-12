@@ -12,3 +12,4 @@ permissions:
   - 'administer DU tuition calculator'
   - 'administer DU tuition calculator content'
   - 'access toolbar'
+  - 'view the administration theme'
