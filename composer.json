@@ -1,6 +1,6 @@
 {
   "name": "university-of-denver/du_tuition_calculator",
-  "version": "10.25.0",
+  "version": "10.25.1",
   "description": "Import Tuition Cost entities.",
   "type": "drupal-custom-module-package",
   "autoload": {
