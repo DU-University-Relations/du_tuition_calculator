@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\du_tuition_calculator\Service\CliQueueInvoker;
+use Drupal\Core\Url;
+
 
 /**
  * Class SettingsForm.
@@ -93,6 +95,7 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('This value is not editable here. Update the Pantheon secret named <code>tuition-calculator-key</code> to change it.'),
     ];
 
+
     $current_year = date('Y');
     $academic_year_options = [
       ($current_year - 1) . '-' . $current_year => ($current_year - 1) . '-' . $current_year,
@@ -163,6 +166,24 @@ class SettingsForm extends ConfigFormBase {
       '#button_type' => 'primary',
     ];
 
+    $year = $config->get('current_academic_year');
+
+    $form['queue_cli']['actions']['export_csv'] = [
+      '#type' => 'link',
+      '#title' => $this->t('Export CSV'),
+      '#url' => Url::fromUri('internal:/admin/config/development/tuition-calculator/export.csv', [
+        'query' => array_filter([
+          'year' => $year,
+        ]),
+      ]),
+      '#attributes' => [
+        'class' => ['button', 'button--primary'],
+        'target' => '_blank',     
+        'rel' => 'noopener',
+      ],
+      '#weight' => 50,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -181,7 +202,6 @@ class SettingsForm extends ConfigFormBase {
     if ($admin_access) {
       $config->set('api_url', trim($values['api_url'] ?? ''));
       $config->set('client_id', trim($values['client_id'] ?? ''));
-      $config->set('client_secret', trim($values['client_secret'] ?? ''));
       $config->set('current_academic_year', $values['current_academic_year'] ?? '');
     }
 

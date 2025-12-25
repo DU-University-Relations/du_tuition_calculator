@@ -8,3 +8,11 @@ services:
     class: 'Drupal\du_tuition_calculator\Service\CliQueueInvoker'
     arguments:
       - '@logger.factory'
+      - '@key.repository'
+
+  du_tuition_calculator.tuition_api:
+    class: Drupal\du_tuition_calculator\Service\TuitionApiClient
+    arguments: ['@http_client', '@config.factory', '@logger.channel.du_tuition_calculator']
+  logger.channel.du_tuition_calculator:
+    parent: logger.channel_base
+    arguments: ['du_tuition_calculator']

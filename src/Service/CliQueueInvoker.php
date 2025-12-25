@@ -37,7 +37,7 @@ class CliQueueInvoker {
 
         $proc = Process::fromShellCommandline($cmd);
         $proc->setWorkingDirectory($drupal_root);
-        $proc->setTimeout(60);
+        $proc->setTimeout(600);
         $proc->run();
 
       $stdout .= $proc->getOutput();
