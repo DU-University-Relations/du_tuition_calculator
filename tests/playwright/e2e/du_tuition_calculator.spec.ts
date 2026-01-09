@@ -1,10 +1,18 @@
 import { test, expect } from '@du_pw/test';
 import { getRole, logInViaForm, logOutViaUi } from "@du_pw/support/users";
 
-test.describe('DU Tuition Calculator E2E Tests', () => {
+test.describe('@tuition_calculator - Tuition Calculator E2E Tests', () => {
 
-  test.beforeEach(async ({ page }) => {
-    // Navigate to the DU Tuition Calculator page before each test
-    // await page.goto('/du-tuition-calculator');
+  const CALC_URL = '/admission-aid/tuition-calculator';
+
+  test('loads the DU Tuition Calculator page', async ({ page }) => {
+    // Navigate to the calculator page
+    await page.goto(CALC_URL);
+
+    // Verify successfully reached the page
+    await expect(page).toHaveURL(new RegExp(`${CALC_URL}.*`));
+
+    // Verify the page rendered 
+    await expect(page.locator('body')).toBeVisible();
   });
 });
